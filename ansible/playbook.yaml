@@ -2,20 +2,24 @@
 - name: Execute Terraform
   hosts: localhost
   gather_facts: false
+
+  vars:
+      terraform_backend_bucket: "state-files-91"
+      terraform_backend_key: "terraform.tfstate"
+      terraform_backend_region: "eu-central-1"
+      src_main_tf: "../terraform"
+
   tasks:
     - name: Run Terraform
-      community.general.cloud.terraform.terraform:
-        src: /path/to/your/terraform/directory  # Path to your Terraform configuration directory
-        state: present  # Indicates you want to apply Terraform configurations
+      community.general.terraform:
+        provider_upgrade: true
+        state: absent  # Indicates you want to destroy Terraform configurations
+        force_init: true
+        project_path: "{{ src_main_tf }}"
         backend_config:
-          bucket: your-bucket-name  # S3 bucket name if using AWS backend
-          key: terraform.tfstate  # Object key for the state file in the bucket
-          region: your-region  # AWS region if using AWS backend
-          # Add more backend configurations as needed
-        var_file:
-          - /path/to/your/terraform/variables.tfvars  # Path to your Terraform variables file
-        var:
-          some_variable: value  # Additional variables if needed
+          bucket: "{{ terraform_backend_bucket }}"
+          key: "{{ terraform_backend_key }}"
+          region: "{{ terraform_backend_region }}"
       register: terraform_output
 
     - debug:
