@@ -1,0 +1,22 @@
+---
+- name: Execute Terraform
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Run Terraform
+      community.general.cloud.terraform.terraform:
+        src: /path/to/your/terraform/directory  # Path to your Terraform configuration directory
+        state: present  # Indicates you want to apply Terraform configurations
+        backend_config:
+          bucket: your-bucket-name  # S3 bucket name if using AWS backend
+          key: terraform.tfstate  # Object key for the state file in the bucket
+          region: your-region  # AWS region if using AWS backend
+          # Add more backend configurations as needed
+        var_file:
+          - /path/to/your/terraform/variables.tfvars  # Path to your Terraform variables file
+        var:
+          some_variable: value  # Additional variables if needed
+      register: terraform_output
+
+    - debug:
+        var: terraform_output
