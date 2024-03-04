@@ -1,0 +1,26 @@
+---
+- name: Deploy ec2 instances
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+      terraform_backend_bucket: "state-files-91"
+      terraform_backend_key: "terraform.tfstate"
+      terraform_backend_region: "eu-central-1"
+      src_main_tf: "../terraform/instances"
+
+  tasks:
+    - name: Populate terraform.tfvars from Ansible variables
+      template:
+        src: terraform.tfvars.j2
+        dest: /path/to/your/terraform.tfvars
+      vars:
+        vpc_id: "your_vpc_id"
+        subnet_id: "your_subnet_id"
+        instance_count: 2
+        instance_type: "t2.micro"
+        ami_id: "your_ami_id"
+
+    - name: Run Terraform
+      community.general.terraform:
+        project_path: "{{ src_main_tf }}"
