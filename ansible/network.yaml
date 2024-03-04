@@ -6,9 +6,8 @@
   tasks:
     - name: Run Terraform
       cloud.terraform.terraform:
-        #provider_upgrade: true
-        state: absent  # Indicates you want to destroy Terraform configurations
-        purge_workspace: true
+        #state: absent  # Indicates you want to destroy Terraform configurations
+        state: present  
         force_init: true
         project_path: "{{ src_main_tf }}"
         backend_config:
