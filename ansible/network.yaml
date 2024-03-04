@@ -6,8 +6,8 @@
   tasks:
     - name: Run Terraform
       cloud.terraform.terraform:
-        #state: absent  # Indicates you want to destroy Terraform configurations
-        state: present  
+        state: absent  # Indicates you want to destroy Terraform configurations
+        #state: present  
         force_init: true
         project_path: "{{ src_main_tf }}"
         backend_config:
