@@ -3,12 +3,6 @@
   hosts: localhost
   gather_facts: false
 
-  vars:
-      terraform_backend_bucket: "state-files-91"
-      terraform_backend_key: "terraform.tfstate"
-      terraform_backend_region: "eu-central-1"
-      src_main_tf: "../terraform"
-
   tasks:
     - name: Run Terraform
       community.general.terraform:

@@ -8,12 +8,13 @@
       terraform_backend_key: "terraform.tfstate"
       terraform_backend_region: "eu-central-1"
       src_main_tf: "../terraform/instances"
+      src_main_tfvars: "../terraform/instances/terraform.tfvars"
 
   tasks:
     - name: Populate terraform.tfvars from Ansible variables
       template:
         src: terraform.tfvars.j2
-        dest: /path/to/your/terraform.tfvars
+        dest: "{{ src_main_tfvars }}"
       vars:
         vpc_id: "your_vpc_id"
         subnet_id: "your_subnet_id"
