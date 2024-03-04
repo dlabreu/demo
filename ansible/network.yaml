@@ -8,7 +8,7 @@
       community.general.terraform:
         #provider_upgrade: true
         state: absent  # Indicates you want to destroy Terraform configurations
-        force_init: true
+        #force_init: true
         project_path: "{{ src_main_tf }}"
         backend_config:
           bucket: "{{ terraform_backend_bucket }}"
