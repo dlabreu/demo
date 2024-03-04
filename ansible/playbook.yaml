@@ -12,7 +12,7 @@
   tasks:
     - name: Run Terraform
       community.general.terraform:
-        provider_upgrade: true
+        #provider_upgrade: true
         #state: absent  # Indicates you want to destroy Terraform configurations
         force_init: true
         project_path: "{{ src_main_tf }}"
