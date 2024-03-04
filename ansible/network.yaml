@@ -5,7 +5,7 @@
 
   tasks:
     - name: Run Terraform
-      community.general.terraform:
+      cloud.terraform.terraform:
         #provider_upgrade: true
         state: absent  # Indicates you want to destroy Terraform configurations
         purge_workspace: true
