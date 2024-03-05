@@ -4,19 +4,22 @@
   gather_facts: false
 
   tasks:    
-    - name: Add or update variables in terraform.tfvars
-      lineinfile:
-        path: "{{ src_main_tfvars }}"
-        regexp: "^{{ item.key }}="
-        line: "{{ item.key }}={{ item.value }}"
-      with_dict:
-        - { key: "vpc_id", value: "{{ vpc_id }}" }
-        - { key: "subnet_id", value: "{{ subnet_id }}" }
-        - { key: "instance_count", value: "{{ instance_count }}" }
-        - { key: "instance_type", value: "{{ instance_type }}" }
-        - { key: "ami_id", value: "{{ ami_id }}" }
-      when: item.value is defined
-
+    - name: Populate terraform.tfvars from Ansible variables
+      template:
+        src: "{{ tp_tfvars }}"
+        dest: "{{ src_main_tfvars }}"
+      vars:
+        key_name: "{{ key_name }}"
+        security_group_ids: "{{ sg_id1 }}"
+        vpc_id: "{{ vpc_id }}"
+        subnet_id: "{{ subnet_id }}"
+        instance_count: "{{ instance_count }}"
+        instance_type: "{{ instance_type }}"
+        ami_id: "{{ ami_id }}"
+        tags: 
+            Name: "{{ instance_name }}"
+            Environment: "{{ environment }}"
+        
     - name: Run Terraform
       community.general.terraform:
         project_path: "{{ src_main_tf }}"
