@@ -16,9 +16,6 @@
         instance_count: "{{ instance_count }}"
         instance_type: "{{ instance_type }}"
         ami_id: "{{ ami_id }}"
-        tags: 
-            Name: "{{ instance_name }}"
-            Environment: "{{ environment }}"
         
     - name: Run Terraform
       community.general.terraform:
