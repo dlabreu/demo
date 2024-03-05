@@ -20,6 +20,8 @@
     - name: Run Terraform
       community.general.terraform:
         project_path: "{{ src_main_tf }}"
+        state: present  
+        force_init: true
         backend_config:
           bucket: "{{ terraform_backend_bucket }}"
           key: "{{ terraform_backend_key }}"
